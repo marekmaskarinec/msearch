@@ -7,4 +7,4 @@ for d in $PATH; do
 	bins=$(printf "%s\n%s" $bins $(ls $d))
 done
 
-command $(echo $bins | msearch "$@") &
+eval $(echo $bins | msearch "$@") &

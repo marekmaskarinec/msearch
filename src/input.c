@@ -122,7 +122,11 @@ void HandleKey(int keycode, int bDown) {
   
 			break;
 		case CNFG_KEY_ENTER:
-			printf("%s", m.results[m.selection]);
+			m.resultc = match(m.buffer, m.results, m.max_results);
+			if (m.resultc) // print result if any found
+				printf("%s", m.results[m.selection]);
+			else // else print the buffer
+				printf("%s\n", m.buffer);
 			die();
 			break;
 		case CNFG_KEY_ESCAPE:

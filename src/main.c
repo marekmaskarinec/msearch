@@ -45,11 +45,21 @@ void draw() {
 	CNFGColor(color); 
 
 	CNFGPenX = padding; CNFGPenY = padding;
-	CNFGDrawText(m.buffer, font_size);
+	char *to_draw = m.buffer;
+
+	if (m.cursor > (w - 2 * padding) / (font_size * 3))
+		to_draw = &m.buffer[m.cursor - (w - 2 * padding) / (font_size * 3)];
+
+	CNFGDrawText(to_draw, font_size);
 	if ((long)(get_clock() * 2) % 2) {
-		CNFGTackRectangle(padding + m.cursor * 3 * font_size - 1,
+		short curpos = m.cursor * 3 * font_size + padding;
+
+		if (to_draw != m.buffer)
+			curpos = w-padding;
+
+		CNFGTackRectangle(curpos - 1,
 			padding,
-			(m.insert ? font_size/4 : 3 * font_size) + m.cursor * 3 * font_size + padding,
+			(m.insert ? font_size/4 : 3 * font_size) + curpos,
 			padding + 6 * font_size);
 	}
 
@@ -78,6 +88,7 @@ int main(int argc, char *argv[]) {
 
 	CNFGSetLineWidth(font_thickness);
 
+	// stuff for window keeping
 	int snum = DefaultScreen(CNFGDisplay);
 	int displayw = DisplayWidth(CNFGDisplay, snum);
 	int displayh = DisplayHeight(CNFGDisplay, snum);
@@ -86,11 +97,14 @@ int main(int argc, char *argv[]) {
 	for (;;) {
 		CNFGBGColor = bg_color;
 
-		XConfigureWindow(CNFGDisplay, CNFGWindow, 1<<0 | 1<<1 | 1<<2 | 1<<3, &changes);
+		if (keep_window)
+			XConfigureWindow(CNFGDisplay, CNFGWindow, 1<<0 | 1<<1 | 1<<2 | 1<<3, &changes);
+
 		CNFGClearFrame();
 		CNFGHandleInput();
 		CNFGGetDimensions(&w, &h);
 
+		// (usable space / space per row) - input row
 		m.max_results = (h - padding * 2) / (6 * font_size) - 1;
 		if (m.max_results >= 256)
 			m.max_results = 255;
