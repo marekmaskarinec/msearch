@@ -46,8 +46,8 @@ void draw() {
 
 	CNFGPenX = padding; CNFGPenY = padding;
 	CNFGDrawText(m.buffer, font_size);
-	if ((long)(get_clock()) % 2) {
-		CNFGTackRectangle(padding + m.cursor * 3 * font_size,
+	if ((long)(get_clock() * 2) % 2) {
+		CNFGTackRectangle(padding + m.cursor * 3 * font_size - 1,
 			padding,
 			(m.insert ? font_size/4 : 3 * font_size) + m.cursor * 3 * font_size + padding,
 			padding + 6 * font_size);

@@ -1,0 +1,25 @@
+msearch is a pipeable search
+menu with vim controls.
+It reads lines, you can
+then search through from stdin.
+It then outputs user's choice
+to stdout. A simple script for
+running binaries with msearch
+is included. It is configurable
+by editing src/config.h.
+
+compilation:
+	Make sure you have
+	downloaded submodules.
+	deps:
+		lX11, lGL - headers
+		compiler - tested with gcc, tcc and clang
+
+	run:
+		make - build
+		sudo make install - install
+
+TODO:
+	- aliases
+	- commands
+	- deleting and copying in vim mode
