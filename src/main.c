@@ -49,7 +49,7 @@ void draw() {
 	if ((long)(get_clock()) % 2) {
 		CNFGTackRectangle(padding + m.cursor * 3 * font_size,
 			padding,
-			font_size/4 + m.cursor * 3 * font_size + padding,
+			(m.insert ? font_size/4 : 3 * font_size) + m.cursor * 3 * font_size + padding,
 			padding + 6 * font_size);
 	}
 

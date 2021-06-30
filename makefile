@@ -1,15 +1,20 @@
 WARNINGS=-Wall -Wextra -Werror -Wno-unused-parameter -Wno-implicit-fallthrough -Wno-unused-result -Wno-old-style-declaration
 LDFLAGS=-lm -lX11 -L /lib64 -lGL -ldl
 
-FULL=$(WARNINGS) $(LDFLAGS) -g
+FULL=$(WARNINGS) $(LDFLAGS) -O3
 
-OBJS=$(patsubst src/%.o, src/%.c, $(wildcard src/*.c))
+OBJS=$(patsubst src/%.c, src/%.o, $(wildcard src/*.c))
 
 src/%.o: src/%.c
-	$(CC) $@ -c $< $(FULL)
+	@echo "building $@"
+	@$(CC) -o $@ -c $< $(FULL)
 
 build: $(OBJS)
-	$(CC) $(FULL) $(OBJS) -o msearch
+	@echo "building binary"
+	@$(CC) $(FULL) $(OBJS) -o msearch
+
+clean:
+	rm -f msearch src/*.o
 
 run: build
 	dmenu_path | ./msearch
