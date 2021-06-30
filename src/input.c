@@ -159,6 +159,14 @@ void HandleKey(int keycode, int bDown) {
 			m.buffer[m.cursor] = 0;
 			strcpy(&m.buffer[m.cursor], &m.buffer[m.cursor + 1]);
 			break;
+		case 'd':
+			if (m.vimbuf == 'd') {
+				memset(m.buffer, 0, m.buf_len);
+				m.cursor = 0;
+				m.buf_len = 0;
+			} else
+				m.vimbuf = 'd';
+			break;
 		case CNFG_KEY_ESCAPE:
 			printf("%s", m.results[m.selection]);
 			die();
@@ -166,6 +174,24 @@ void HandleKey(int keycode, int bDown) {
 		default:
 			if (m.shift)
 				keycode = uppercase(keycode);	
+
+			if (m.vimbuf == 'd') {
+				int end = domovkey(keycode);
+				if (end == m.cursor) {
+					m.vimbuf = 0;
+					break;
+				}
+
+				int start = (m.cursor < end) ? m.cursor : end;
+				end = (m.cursor > end) ? m.cursor : end;
+
+				m.buf_len -= (end-start);
+				strcpy(&m.buffer[start], &m.buffer[end]);
+				memset(&m.buffer[m.buf_len], 0, BUFFER_SIZE - m.buf_len);
+
+				m.vimbuf = 0;
+				m.cursor = start;
+			}
       
 			if (strchr("$^webhl", keycode))
 				m.cursor = domovkey(keycode);
