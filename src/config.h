@@ -3,7 +3,7 @@
 
 #include <stdbool.h>
 
-unsigned color = 0xafaf87ff;
+unsigned color = 0x3fc1b0ff;
 unsigned bg_color = 0x262626ff;
 
 short font_thickness = 2;

@@ -7,4 +7,11 @@ for d in $PATH; do
 	bins=$(printf "%s\n%s" $bins $(ls $d))
 done
 
-eval $(echo $bins | msearch "$@") &
+output=$(echo $bins | msearch "$@")
+
+# if response starts with ~, start it in st
+if [ ${output#*~} != $output ]; then
+	st -e $(echo $output | sed 's/^~//g')
+else
+	eval $output &
+fi

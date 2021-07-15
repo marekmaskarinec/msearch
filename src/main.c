@@ -11,7 +11,7 @@
 
 // window
 short w, h;
-menu m = {0};
+menu m = { .insert = true };
 
 void HandleMotion( int x, int y, int mask ) { }
 void HandleDestroy() {

@@ -72,9 +72,9 @@ int domovkey(char c) {
 }
 
 void HandleKey(int keycode, int bDown) {
-	if (keycode == CNFG_KEY_SHIFT)
+	if (keycode == CNFG_KEY_SHIFT) // switch shift mask
 		m.shift = !m.shift;
-	else if (m.insert) {
+	else if (m.insert) { // insert mode
 		switch (keycode) {
 		case CNFG_KEY_BACKSPACE:
 			if (!bDown || !m.cursor)
@@ -151,7 +151,7 @@ void HandleKey(int keycode, int bDown) {
 			m.resultc = match(m.buffer, m.results, m.max_results);
 			break;
 		}
-	} else {
+	} else { // vim mode
 		if (!bDown)
 			return;
 
@@ -172,7 +172,6 @@ void HandleKey(int keycode, int bDown) {
 				m.vimbuf = 'd';
 			break;
 		case CNFG_KEY_ESCAPE:
-			printf("%s", m.results[m.selection]);
 			die();
 			break;
 		default:

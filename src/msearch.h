@@ -11,12 +11,22 @@ typedef struct _item {
 } item;
 
 typedef struct {
+	char *name;
+	char *buf;
+	void (* func)(int argc, char **argv);
+} command;
+
+typedef struct {
 	// items
 	item *items;
 	char *results[256];
 	int resultc;
 	int max_results;
 	int selection;
+
+	// commands
+	command commands[256];
+	int commandc;
 
 	// input
 	char buffer[BUFFER_SIZE];

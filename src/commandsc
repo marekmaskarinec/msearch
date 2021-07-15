@@ -1,0 +1,7 @@
+#include "msearch.h"
+
+extern menu m;
+
+void init_commands() {
+	m.commands[m.commandc++] = (command){ .name = "hello",  }
+}

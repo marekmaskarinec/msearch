@@ -11,6 +11,15 @@ int match(char *query, char **out, int n) {
 	if (!querylen)
 		return 0;
 
+	if (query[0] == ':') {
+		for (int i=0; i < m.commandc && outc < n; i++) {
+			if (strncmp(query, m.commands[i].name, querylen))
+				continue;
+
+			out[outc] = m.commands[i].name;
+		}
+	}
+
 	for (item *i = m.items; i && outc < n; i = i->next) {
 		if (!i->content)
 			continue;
