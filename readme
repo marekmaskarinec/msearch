@@ -1,7 +1,7 @@
 msearch is a pipeable search
-menu with vim controls.
-It reads lines, you can
-then search through from stdin.
+menu with some vim controls.
+It reads lines from stdin, that
+can then be searched through.
 It then outputs user's choice
 to stdout. A simple script for
 running binaries with msearch
@@ -20,6 +20,4 @@ compilation:
 		sudo make install - install
 
 TODO:
-	- aliases
-	- commands
-	- deleting and copying in vim mode
+	- more complete vim mode with clipboard
